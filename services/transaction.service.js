@@ -5,7 +5,7 @@ const transactionService = {
 
         try {
 
-            const newTransaction = new Transactions({ user_id1, user_id2, amount, date, description});
+            const newTransaction = new Transactions({ from: user_id1, to: user_id2, amount, date, description });
 
             const savedTransaction = await newTransaction.save();
 
@@ -15,6 +15,17 @@ const transactionService = {
             throw new Error('Error creating Transaction');
         }
     },
+
+    async getTransactionsBySender(userId) {
+        try {
+
+            const transactions = await Transactions.find({ from: userId });
+
+            return transactions;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 
 

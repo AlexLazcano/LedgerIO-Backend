@@ -6,13 +6,15 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 
 const connectToDatabase = require('./config/db_conn.js');
-const userRoutes = require('./routers/users.route.js');
+const userRoutes = require('./routers/users.routes.js');
+const transactionRoutes = require('./routers/transactions.routes.js');
 
 app.use(cors());
 app.use(express.json());
 
 
 app.use('/users', userRoutes);
+app.use('/transactions', transactionRoutes);
 
 connectToDatabase().then(db => {
     app.listen(PORT, () => {

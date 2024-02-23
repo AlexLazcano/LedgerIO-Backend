@@ -1,17 +1,17 @@
+const User = require('../models/User.model');
 const connectToDatabase = require('../config/db_conn');
 
 const userService = {
     async createUser(name) {
         console.log('creating user', name);
         try {
-            const db = await connectToDatabase();
 
-            const usersCollection = db.collection('users');
+            const newUser = new User({ name });
 
-            const newUser = { name, balance: 0 };
-            const result = await usersCollection.insertOne(newUser);
-            console.log('User created:', result);
-            return result.ops[0];
+            const savedUser = await newUser.save();
+            console.log('User created:', savedUser);
+
+            return savedUser;
         } catch (error) {
             throw new Error('Error creating user');
         }
@@ -19,9 +19,9 @@ const userService = {
 
     async getAllUsers() {
         try {
-            const db = await connectToDatabase();
-            const usersCollection = db.collection('users');
-            return await usersCollection.find().toArray();
+            const allUsers = await User.find().exec();
+            
+            return await allUsers;
         } catch (error) {
             throw new Error('Error fetching users');
         }

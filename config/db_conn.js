@@ -1,5 +1,4 @@
-const { MongoClient } = require('mongodb');
-
+const mongoose = require('mongoose');
 
 let cachedDb = null;
 
@@ -10,13 +9,16 @@ const connectToDatabase = async () => {
     }
 
     const connectionString = process.env.MONGO_URL || "";
-    const client = new MongoClient(connectionString);
+    
+    
 
     try {
-        await client.connect();
+        await mongoose.connect(connectionString, {
+            dbName: "ledger"
+        });
+
+        const db = mongoose.connection;
         
-        const db = client.db("ledger");
-        console.log("Connected to MongoDB", db.databaseName);
         cachedDb = db; // Cache the database connection
         return db;
     } catch (error) {

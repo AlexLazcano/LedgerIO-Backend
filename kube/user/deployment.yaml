@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+  namespace: ledger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service-container
+        image: alazcano255/user-service:v0.2
+        ports:
+        - containerPort: 4000
+        env:
+          - name: MONGO_URL
+            value: "mongodb://host.docker.internal:27017/"
+          - name: PORT
+            value: "4000"
+  
+          # Add additional environment variables here
+        # Add additional container configuration here, such as volume mounts, readiness and liveness probes, etc.

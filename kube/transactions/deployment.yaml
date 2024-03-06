@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service-deployment
+  name: transactions-service-deployment
   namespace: ledger
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app: transactions-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: transactions-service
     spec:
       containers:
-      - name: user-service-container
-        image: alazcano255/user-service:v0.2
+      - name: transactions-service-container
+        image: alazcano255/transactions-service:v0.1
         ports:
-        - containerPort: 4000
+        - containerPort: 4001
         env:
           - name: MONGO_URL
             value: "mongodb://host.docker.internal:27017/"
           - name: PORT
-            value: "4000"
+            value: "4001"
         resources:
           limits:
             cpu: "0.5"

@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-service-port
+  name: transaction-service-port
   namespace: ledger
 spec:
   selector:
-    app: user-service
+    app: transactions-service
   ports:
     - protocol: TCP
-      port: 4000  # Port exposed by the service
+      port: 4001 # Port exposed by the service
   type: LoadBalancer  # Set the service type to LoadBalancer
+      
